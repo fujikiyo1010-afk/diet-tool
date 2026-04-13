@@ -186,6 +186,7 @@
       border-radius: 12px;
       padding: 12px;
       border: 1px solid #e5edf8;
+      white-space: pre-line;
     }
 
     .progress-card {
@@ -238,6 +239,65 @@
       font-size: 12px;
       color: var(--subtext);
       line-height: 1.7;
+    }
+
+    .share-card {
+      margin-top: 14px;
+      background: #ffffff;
+      border: 1px solid #e5edf8;
+      border-radius: 16px;
+      padding: 14px;
+      display: none;
+    }
+
+    .share-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .share-url {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.7;
+      word-break: break-all;
+      background: #f8fafc;
+      border: 1px solid #e6edf5;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .share-button {
+      flex: 1;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid #d9e8ff;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    .share-button:hover {
+      background: #dceaff;
+      transform: none;
+    }
+
+    .share-message {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--subtext);
+      line-height: 1.6;
+      min-height: 18px;
     }
 
     .note {
@@ -342,6 +402,10 @@
       .week-weight {
         font-size: 17px;
       }
+
+      .share-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -412,6 +476,16 @@
       <div class="progress-note" id="progressNote"></div>
     </div>
 
+    <div class="share-card" id="shareCard">
+      <div class="share-title">この入力内容を共有</div>
+      <div class="share-url" id="shareUrl">-</div>
+      <div class="share-buttons">
+        <button type="button" class="share-button" onclick="copyShareUrl()">URLをコピー</button>
+        <button type="button" class="share-button" onclick="clearSavedData()">保存を消す</button>
+      </div>
+      <div class="share-message" id="shareMessage"></div>
+    </div>
+
     <div class="note">
       ※週0.5kg前後の減量が、無理の少ない目安です。<br>
       無理な減量は、継続しにくくリバウンドの原因にもなります。
@@ -429,30 +503,139 @@
       return `${y}年${m}月${d}日`;
     }
 
+    function formatTodayForInput() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
     function setTodayToStartDate() {
       const startDateInput = document.getElementById("startDate");
       if (!startDateInput.value) {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, "0");
-        const day = String(today.getDate()).padStart(2, "0");
-        startDateInput.value = `${year}-${month}-${day}`;
+        startDateInput.value = formatTodayForInput();
       }
     }
 
     function showError(message) {
       const resultCard = document.getElementById("resultCard");
       const progressCard = document.getElementById("progressCard");
+      const shareCard = document.getElementById("shareCard");
       const guideMessage = document.getElementById("guideMessage");
 
       resultCard.style.display = "block";
       progressCard.style.display = "none";
+      shareCard.style.display = "none";
 
       document.getElementById("resultDiff").innerText = "-";
       document.getElementById("resultPeriod").innerText = "-";
       document.getElementById("subResult").innerText = message;
       document.getElementById("timeline").innerHTML = "";
+      document.getElementById("shareMessage").innerText = "";
       guideMessage.innerText = "入力内容を確認して、もう一度計算してみましょう。";
+    }
+
+    function saveToLocalStorage(current, target, pace, startDateValue) {
+      localStorage.setItem("current", current);
+      localStorage.setItem("target", target);
+      localStorage.setItem("pace", pace);
+      localStorage.setItem("startDate", startDateValue);
+    }
+
+    function getShareUrl(current, target, pace, startDateValue) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("current", current);
+      url.searchParams.set("target", target);
+      url.searchParams.set("pace", pace);
+      url.searchParams.set("startDate", startDateValue);
+      return url.toString();
+    }
+
+    function updateBrowserUrl(current, target, pace, startDateValue) {
+      const shareUrl = getShareUrl(current, target, pace, startDateValue);
+      window.history.replaceState({}, "", shareUrl);
+      return shareUrl;
+    }
+
+    function updateShareArea(shareUrl) {
+      const shareCard = document.getElementById("shareCard");
+      shareCard.style.display = "block";
+      document.getElementById("shareUrl").innerText = shareUrl;
+      document.getElementById("shareMessage").innerText = "このURLを開くと、同じ入力内容を再現できます。";
+    }
+
+    async function copyShareUrl() {
+      const shareUrl = document.getElementById("shareUrl").innerText;
+      const shareMessage = document.getElementById("shareMessage");
+
+      if (!shareUrl || shareUrl === "-") {
+        shareMessage.innerText = "先に計算してください。";
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        shareMessage.innerText = "URLをコピーしました。";
+      } catch (error) {
+        shareMessage.innerText = "コピーに失敗しました。長押しまたは手動でコピーしてください。";
+      }
+    }
+
+    function clearSavedData() {
+      localStorage.removeItem("current");
+      localStorage.removeItem("target");
+      localStorage.removeItem("pace");
+      localStorage.removeItem("startDate");
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("current");
+      url.searchParams.delete("target");
+      url.searchParams.delete("pace");
+      url.searchParams.delete("startDate");
+      window.history.replaceState({}, "", url.toString());
+
+      document.getElementById("current").value = "";
+      document.getElementById("target").value = "";
+      document.getElementById("pace").value = "";
+      document.getElementById("startDate").value = formatTodayForInput();
+
+      document.getElementById("resultCard").style.display = "none";
+      document.getElementById("progressCard").style.display = "none";
+      document.getElementById("shareCard").style.display = "none";
+      document.getElementById("timeline").innerHTML = "";
+      document.getElementById("guideMessage").innerText = "無理の少ないペースで、続けやすい計画を立てましょう。";
+    }
+
+    function restoreInputs() {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      const urlCurrent = urlParams.get("current");
+      const urlTarget = urlParams.get("target");
+      const urlPace = urlParams.get("pace");
+      const urlStartDate = urlParams.get("startDate");
+
+      if (urlCurrent && urlTarget && urlPace && urlStartDate) {
+        document.getElementById("current").value = urlCurrent;
+        document.getElementById("target").value = urlTarget;
+        document.getElementById("pace").value = urlPace;
+        document.getElementById("startDate").value = urlStartDate;
+        return;
+      }
+
+      const savedCurrent = localStorage.getItem("current");
+      const savedTarget = localStorage.getItem("target");
+      const savedPace = localStorage.getItem("pace");
+      const savedStartDate = localStorage.getItem("startDate");
+
+      if (savedCurrent && savedTarget && savedPace && savedStartDate) {
+        document.getElementById("current").value = savedCurrent;
+        document.getElementById("target").value = savedTarget;
+        document.getElementById("pace").value = savedPace;
+        document.getElementById("startDate").value = savedStartDate;
+      } else {
+        setTodayToStartDate();
+      }
     }
 
     function calc() {
@@ -568,6 +751,10 @@
         timeline.appendChild(card);
       }
 
+      saveToLocalStorage(current, target, pace, startDateValue);
+      const shareUrl = updateBrowserUrl(current, target, pace, startDateValue);
+      updateShareArea(shareUrl);
+
       resultCard.scrollIntoView({
         behavior: "smooth",
         block: "start"
@@ -575,7 +762,17 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      setTodayToStartDate();
+      restoreInputs();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if (
+        urlParams.get("current") &&
+        urlParams.get("target") &&
+        urlParams.get("pace") &&
+        urlParams.get("startDate")
+      ) {
+        calc();
+      }
     });
   </script>
 
