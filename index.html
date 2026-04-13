@@ -12,21 +12,6 @@
       padding: 0;
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      font-size: 28px;
-    }
-
-    p.lead {
-      text-align: center;
-      font-size: 14px;
-      color: #333;
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
     .container {
       max-width: 400px;
       margin: 20px auto;
@@ -132,23 +117,24 @@
   <div class="container">
     <img src="header.png" style="width:100%; margin-bottom:20px;">
 
-    <p class="lead">
+    <p style="text-align:center; font-size:14px; color:#333; line-height:1.8; margin-bottom:20px;">
       今の体重と目標体重を入れるだけで、<br>
       目標までの期間と、週ごとの体重推移が分かります。
     </p>
 
     <label>現在の体重（kg）</label>
-    <input type="number" id="current">
+    <input type="number" id="current" placeholder="例：75">
 
     <label>目標体重（kg）</label>
-    <input type="number" id="target">
+    <input type="number" id="target" placeholder="例：60">
 
     <label>1週間の減量ペース（kg）</label>
-    <input type="number" id="pace" step="0.1">
+    <input type="number" id="pace" placeholder="例：0.5" step="0.1">
 
     <button onclick="calc()">計算する</button>
 
     <div id="result"></div>
+    <div id="subResult" style="margin-top:10px; font-size:13px; color:#666; line-height:1.8;"></div>
 
     <div class="note">
       ※週0.5kg前後の減量が、無理の少ない目安です。<br>
@@ -167,28 +153,41 @@
 
       if (!current || !target || !pace) {
         document.getElementById("result").innerText = "入力してください";
+        document.getElementById("subResult").innerText = "";
         document.getElementById("timeline").innerHTML = "";
         return;
       }
 
       if (target >= current) {
         document.getElementById("result").innerText = "目標体重は現在体重より小さくしてください";
+        document.getElementById("subResult").innerText = "";
         document.getElementById("timeline").innerHTML = "";
         return;
       }
 
       if (pace <= 0) {
         document.getElementById("result").innerText = "減量ペースは0より大きい数字を入力してください";
+        document.getElementById("subResult").innerText = "";
         document.getElementById("timeline").innerHTML = "";
         return;
       }
 
       const diff = current - target;
       const weeks = diff / pace;
-      const days = weeks * 7;
+      const days = Math.round(weeks * 7);
+
+      const goalDate = new Date();
+      goalDate.setDate(goalDate.getDate() + days);
+
+      const year = goalDate.getFullYear();
+      const month = goalDate.getMonth() + 1;
+      const date = goalDate.getDate();
 
       document.getElementById("result").innerText =
-        `必要な減量：${diff.toFixed(1)}kg\n期間：${weeks.toFixed(1)}週間（約${Math.round(days)}日）`;
+        `必要な減量：${diff.toFixed(1)}kg\n期間：${weeks.toFixed(1)}週間（約${days}日）`;
+
+      document.getElementById("subResult").innerText =
+        `目標到達予定日：${year}年${month}月${date}日ごろ\nこの期間を目安に継続していきましょう`;
 
       const timeline = document.getElementById("timeline");
       timeline.innerHTML = "";
@@ -225,6 +224,10 @@
 
         timeline.appendChild(card);
       }
+
+      document.getElementById("result").scrollIntoView({
+        behavior: "smooth"
+      });
     }
   </script>
 
