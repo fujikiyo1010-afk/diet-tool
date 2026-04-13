@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
       background: #f5f5f5;
       margin: 0;
       padding: 0;
@@ -30,6 +30,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
+      font-family: inherit;
     }
 
     button {
@@ -42,6 +43,7 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
+      font-family: inherit;
     }
 
     button:hover {
@@ -92,6 +94,19 @@
       align-items: center;
       font-size: 16px;
       font-weight: bold;
+      gap: 10px;
+    }
+
+    .week-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .week-date {
+      font-size: 12px;
+      color: #666;
+      font-weight: normal;
     }
 
     .week-note {
@@ -115,7 +130,7 @@
 <body>
 
   <div class="container">
-    <img src="header.png" style="width:100%; margin-bottom:20px;">
+    <img src="cover.png" style="width:100%; margin-bottom:20px;">
 
     <p style="text-align:center; font-size:14px; color:#333; line-height:1.8; margin-bottom:20px;">
       今の体重と目標体重を入れるだけで、<br>
@@ -130,6 +145,9 @@
 
     <label>1週間の減量ペース（kg）</label>
     <input type="number" id="pace" placeholder="例：0.5" step="0.1">
+
+    <label>開始日</label>
+    <input type="date" id="startDate">
 
     <button onclick="calc()">計算する</button>
 
@@ -150,9 +168,17 @@
       const current = parseFloat(document.getElementById("current").value);
       const target = parseFloat(document.getElementById("target").value);
       const pace = parseFloat(document.getElementById("pace").value);
+      const startDateValue = document.getElementById("startDate").value;
 
       if (!current || !target || !pace) {
-        document.getElementById("result").innerText = "入力してください";
+        document.getElementById("result").innerText = "現在の体重・目標体重・減量ペースを入力してください";
+        document.getElementById("subResult").innerText = "";
+        document.getElementById("timeline").innerHTML = "";
+        return;
+      }
+
+      if (!startDateValue) {
+        document.getElementById("result").innerText = "開始日を入力してください";
         document.getElementById("subResult").innerText = "";
         document.getElementById("timeline").innerHTML = "";
         return;
@@ -176,48 +202,65 @@
       const weeks = diff / pace;
       const days = Math.round(weeks * 7);
 
-      const goalDate = new Date();
+      const startDate = new Date(startDateValue);
+
+      const goalDate = new Date(startDate);
       goalDate.setDate(goalDate.getDate() + days);
 
-      const year = goalDate.getFullYear();
-      const month = goalDate.getMonth() + 1;
-      const date = goalDate.getDate();
+      const goalYear = goalDate.getFullYear();
+      const goalMonth = goalDate.getMonth() + 1;
+      const goalDay = goalDate.getDate();
 
       document.getElementById("result").innerText =
         `必要な減量：${diff.toFixed(1)}kg\n期間：${weeks.toFixed(1)}週間（約${days}日）`;
 
       document.getElementById("subResult").innerText =
-        `目標到達予定日：${year}年${month}月${date}日ごろ\nこの期間を目安に継続していきましょう`;
+        `目標到達予定日：${goalYear}年${goalMonth}月${goalDay}日ごろ\nこの期間を目安に継続していきましょう`;
 
       const timeline = document.getElementById("timeline");
       timeline.innerHTML = "";
 
-      const totalWeeks = Math.ceil(weeks);
+      const normalWeeks = Math.ceil(weeks);
 
-      for (let i = 1; i <= totalWeeks; i++) {
-        const weight = current - (pace * i);
+      for (let i = 0; i <= normalWeeks; i++) {
+        const weekDate = new Date(startDate);
+        weekDate.setDate(weekDate.getDate() + i * 7);
+
+        const y = weekDate.getFullYear();
+        const m = weekDate.getMonth() + 1;
+        const d = weekDate.getDate();
+        const dateText = `${y}年${m}月${d}日`;
+
+        let displayWeight = current - (pace * i);
+        if (displayWeight < target) {
+          displayWeight = target;
+        }
 
         const card = document.createElement("div");
         card.className = "week-card";
 
         let note = "";
 
-        if (i === 1) {
-          note = "スタート直後の最初の目安です";
+        if (i === 0) {
+          note = "スタート時点の体重です";
         }
-        if (i === 26) {
+        if (i + 1 === 26) {
           note = "ここが6か月の目安です";
           card.classList.add("highlight-6m");
         }
-        if (i === totalWeeks) {
+        if (i === normalWeeks) {
           note = "ここが目標到達の目安です";
           card.classList.add("highlight-goal");
+          displayWeight = target;
         }
 
         card.innerHTML = `
           <div class="week-row">
-            <div>${i}週目</div>
-            <div>${weight.toFixed(1)}kg</div>
+            <div class="week-left">
+              <div>${i + 1}週目</div>
+              <div class="week-date">${dateText}</div>
+            </div>
+            <div>${displayWeight.toFixed(1)}kg</div>
           </div>
           ${note ? `<div class="week-note">${note}</div>` : ""}
         `;
@@ -233,3 +276,4 @@
 
 </body>
 </html>
+
