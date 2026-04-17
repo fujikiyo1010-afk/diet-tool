@@ -25,6 +25,7 @@
       --pdf-yellow: #fff9ec;
       --pdf-blue: #eef6ff;
       --pdf-green: #eefcf3;
+      --pdf-purple: #f5f0ff;
     }
 
     * {
@@ -47,6 +48,31 @@
       border-radius: 24px;
       box-shadow: var(--shadow);
       border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .top-copy {
+      margin-bottom: 18px;
+      padding: 16px 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff4f8 0%, #eef6ff 50%, #f7f2ff 100%);
+      border: 1px solid #f0dce8;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .top-copy-kicker {
+      font-size: 10px;
+      font-weight: 800;
+      color: #ec4899;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .top-copy-text {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1f2937;
+      line-height: 1.5;
     }
 
     .hero-image {
@@ -260,65 +286,6 @@
       line-height: 1.7;
     }
 
-    .share-card {
-      margin-top: 14px;
-      background: #ffffff;
-      border: 1px solid #e5edf8;
-      border-radius: 16px;
-      padding: 14px;
-      display: none;
-    }
-
-    .share-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 8px;
-    }
-
-    .share-url {
-      font-size: 12px;
-      color: #475569;
-      line-height: 1.7;
-      word-break: break-all;
-      background: #f8fafc;
-      border: 1px solid #e6edf5;
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin-bottom: 10px;
-    }
-
-    .share-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .share-button {
-      flex: 1;
-      height: 44px;
-      border-radius: 12px;
-      border: 1px solid #d9e8ff;
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: none;
-    }
-
-    .share-button:hover {
-      background: #dceaff;
-      transform: none;
-    }
-
-    .share-message {
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--subtext);
-      line-height: 1.6;
-      min-height: 18px;
-    }
-
     .note {
       margin-top: 16px;
       font-size: 12px;
@@ -428,8 +395,8 @@
         font-size: 17px;
       }
 
-      .share-buttons {
-        flex-direction: column;
+      .top-copy-text {
+        font-size: 16px;
       }
     }
 
@@ -464,11 +431,12 @@
       }
 
       .pdf-header {
-        background: linear-gradient(135deg, #ffe7f1 0%, #eef6ff 100%);
-        border: 1px solid #f3d3e1;
-        border-radius: 22px;
+        background: linear-gradient(135deg, #ffe6f3 0%, #eef6ff 50%, #f5f0ff 100%);
+        border: 1px solid #f2d7e8;
+        border-radius: 26px;
         padding: 22px 20px;
-        margin-bottom: 18px;
+        margin-bottom: 14px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
       }
 
       .pdf-kicker {
@@ -478,21 +446,21 @@
         border: 1px solid #f7bfd6;
         border-radius: 999px;
         padding: 6px 12px;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 800;
         letter-spacing: 0.08em;
         margin-bottom: 10px;
       }
 
       .pdf-title {
-        font-size: 26px;
+        font-size: 25px;
         font-weight: 800;
         color: #1f2937;
         margin-bottom: 8px;
       }
 
       .pdf-subtitle {
-        font-size: 13px;
+        font-size: 12px;
         line-height: 1.8;
         color: #6b7280;
       }
@@ -500,122 +468,139 @@
       .pdf-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 18px;
+        gap: 10px;
+        margin-bottom: 14px;
       }
 
       .pdf-box {
         border-radius: 18px;
-        padding: 16px;
+        padding: 14px;
         border: 1px solid #e8edf5;
         break-inside: avoid;
         page-break-inside: avoid;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
       }
 
       .pdf-box.pink {
-        background: var(--pdf-pink);
+        background: linear-gradient(180deg, #fff4f8 0%, #fff8fb 100%);
       }
 
       .pdf-box.blue {
-        background: var(--pdf-blue);
+        background: linear-gradient(180deg, #eef6ff 0%, #f7fbff 100%);
       }
 
       .pdf-box.yellow {
-        background: var(--pdf-yellow);
+        background: linear-gradient(180deg, #fff9ec 0%, #fffdf7 100%);
       }
 
       .pdf-box.green {
-        background: var(--pdf-green);
+        background: linear-gradient(180deg, #eefcf3 0%, #f8fffb 100%);
       }
 
       .pdf-box-title {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 800;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #374151;
       }
 
       .pdf-box-content {
-        font-size: 13px;
-        line-height: 1.9;
+        font-size: 12px;
+        line-height: 1.8;
         white-space: pre-line;
       }
 
       .pdf-message {
-        background: #ffffff;
-        border: 1px dashed #f4b6cf;
+        background: linear-gradient(135deg, #ffffff 0%, #fff7fb 100%);
+        border: 1px dashed #f3b6d2;
         border-radius: 18px;
-        padding: 16px;
-        margin-bottom: 18px;
-        font-size: 13px;
-        line-height: 1.9;
+        padding: 14px 16px;
+        margin-bottom: 14px;
+        font-size: 12px;
+        line-height: 1.85;
       }
 
       .pdf-section-title {
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 800;
         color: #1f2937;
-        margin: 20px 0 12px;
+        margin: 16px 0 10px;
       }
 
       .pdf-timeline {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 8px;
       }
 
       .pdf-timeline-item {
-        background: #ffffff;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
         border: 1px solid #e5ebf3;
         border-radius: 16px;
-        padding: 12px 14px;
+        padding: 10px 12px;
         break-inside: avoid;
         page-break-inside: avoid;
+        min-height: 72px;
+      }
+
+      .pdf-timeline-item.start {
+        background: linear-gradient(180deg, #fff7fb 0%, #fffdfd 100%);
+        border-color: #f4c2d9;
+      }
+
+      .pdf-timeline-item.month {
+        background: linear-gradient(180deg, #fdf2f8 0%, #fff8fc 100%);
+        border-color: #f5c7de;
+      }
+
+      .pdf-timeline-item.goal {
+        background: linear-gradient(180deg, #fff7e8 0%, #fffdf7 100%);
+        border-color: #f7d59c;
       }
 
       .pdf-timeline-top {
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        margin-bottom: 6px;
+        margin-bottom: 5px;
       }
 
       .pdf-timeline-week {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 800;
         color: #1f2937;
       }
 
       .pdf-timeline-weight {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 800;
         color: #111827;
       }
 
       .pdf-timeline-date {
-        font-size: 11px;
+        font-size: 10px;
         color: #6b7280;
         margin-bottom: 4px;
       }
 
       .pdf-timeline-note {
-        font-size: 11px;
+        font-size: 10px;
         color: #ec4899;
-        line-height: 1.6;
+        line-height: 1.55;
       }
 
       .pdf-footer {
-        margin-top: 20px;
-        padding-top: 12px;
+        margin-top: 14px;
+        padding-top: 10px;
         border-top: 1px solid #e5e7eb;
-        font-size: 11px;
+        font-size: 10px;
         color: #9ca3af;
         text-align: center;
       }
 
       @page {
         size: A4;
-        margin: 12mm;
+        margin: 10mm;
       }
     }
   </style>
@@ -624,6 +609,11 @@
 <body>
 
   <div class="container">
+    <div class="top-copy">
+      <div class="top-copy-kicker">DIET SUPPORT</div>
+      <div class="top-copy-text">続けられる形で、前へ。</div>
+    </div>
+
     <img src="cover.png" alt="減量ツール画像" class="hero-image">
 
     <p class="intro">
@@ -688,16 +678,6 @@
       <div class="progress-note" id="progressNote"></div>
     </div>
 
-    <div class="share-card" id="shareCard">
-      <div class="share-title">この入力内容を共有</div>
-      <div class="share-url" id="shareUrl">-</div>
-      <div class="share-buttons">
-        <button type="button" class="share-button" onclick="copyShareUrl()">URLをコピー</button>
-        <button type="button" class="share-button" onclick="clearSavedData()">保存を消す</button>
-      </div>
-      <div class="share-message" id="shareMessage"></div>
-    </div>
-
     <div class="note">
       ※週0.5kg前後の減量が、無理の少ない目安です。<br>
       無理な減量は、継続しにくくリバウンドの原因にもなります。
@@ -713,8 +693,8 @@
         <div class="pdf-kicker">DIET PLAN SHEET</div>
         <div class="pdf-title">減量プランシート</div>
         <div class="pdf-subtitle">
-          入力内容をもとに、分かりやすくまとめた減量計画です。<br>
-          無理のないペースで、ひとつずつ進めていきましょう。
+          入力内容をもとに、分かりやすく整理した減量プランです。<br>
+          大切なのは、無理なく続けられる形で積み重ねることです。
         </div>
       </div>
 
@@ -739,7 +719,7 @@
 
       <div class="pdf-message" id="pdfCheerMessage">-</div>
 
-      <div class="pdf-section-title">週ごとの体重推移</div>
+      <div class="pdf-section-title">重要な節目だけを見やすく表示</div>
       <div class="pdf-timeline" id="pdfTimeline"></div>
 
       <div class="pdf-footer">
@@ -774,18 +754,15 @@
     function showError(message) {
       const resultCard = document.getElementById("resultCard");
       const progressCard = document.getElementById("progressCard");
-      const shareCard = document.getElementById("shareCard");
       const guideMessage = document.getElementById("guideMessage");
 
       resultCard.style.display = "block";
       progressCard.style.display = "none";
-      shareCard.style.display = "none";
 
       document.getElementById("resultDiff").innerText = "-";
       document.getElementById("resultPeriod").innerText = "-";
       document.getElementById("subResult").innerText = message;
       document.getElementById("timeline").innerHTML = "";
-      document.getElementById("shareMessage").innerText = "";
       guideMessage.innerText = "入力内容を確認して、もう一度計算してみましょう。";
     }
 
@@ -794,28 +771,6 @@
       localStorage.setItem("target", target);
       localStorage.setItem("pace", pace);
       localStorage.setItem("startDate", startDateValue);
-    }
-
-    function getShareUrl(current, target, pace, startDateValue) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("current", current);
-      url.searchParams.set("target", target);
-      url.searchParams.set("pace", pace);
-      url.searchParams.set("startDate", startDateValue);
-      return url.toString();
-    }
-
-    function updateBrowserUrl(current, target, pace, startDateValue) {
-      const shareUrl = getShareUrl(current, target, pace, startDateValue);
-      window.history.replaceState({}, "", shareUrl);
-      return shareUrl;
-    }
-
-    function updateShareArea(shareUrl) {
-      const shareCard = document.getElementById("shareCard");
-      shareCard.style.display = "block";
-      document.getElementById("shareUrl").innerText = shareUrl;
-      document.getElementById("shareMessage").innerText = "このURLを開くと、同じ入力内容を再現できます。";
     }
 
     function getMonthLabelByWeekIndex(i) {
@@ -859,6 +814,71 @@
       }
     }
 
+    function getDisplayWeightForWeek(current, target, pace, normalWeeks, i) {
+      let displayWeight;
+      if (i === normalWeeks - 1) {
+        displayWeight = target;
+      } else {
+        displayWeight = current - (pace * i);
+        if (displayWeight < target) {
+          displayWeight = target;
+        }
+      }
+      return displayWeight;
+    }
+
+    function getPdfTimelineWeeks(normalWeeks) {
+      const baseWeeks = [0, 4, 12, 20, 28, 36, normalWeeks - 1];
+      const validWeeks = baseWeeks.filter(index => index >= 0 && index < normalWeeks);
+
+      const uniqueSet = new Set(validWeeks);
+
+      const targetCount = Math.min(10, normalWeeks);
+
+      if (uniqueSet.size < targetCount && normalWeeks > 1) {
+        const intervals = targetCount - 1;
+        for (let n = 0; n <= intervals; n++) {
+          const index = Math.round((normalWeeks - 1) * (n / intervals));
+          if (index >= 0 && index < normalWeeks) {
+            uniqueSet.add(index);
+          }
+        }
+      }
+
+      const sorted = Array.from(uniqueSet).sort((a, b) => a - b);
+
+      if (sorted.length > 10) {
+        const trimmed = [];
+        for (let n = 0; n < 10; n++) {
+          const pos = Math.round((sorted.length - 1) * (n / 9));
+          trimmed.push(sorted[pos]);
+        }
+        return Array.from(new Set(trimmed)).sort((a, b) => a - b);
+      }
+
+      return sorted;
+    }
+
+    function getPdfWeekNote(i, normalWeeks) {
+      if (i === 0) return "スタート";
+      if (i === normalWeeks - 1) return "目標到達の目安";
+
+      const monthLabel = getMonthLabelByWeekIndex(i);
+      if (monthLabel) return monthLabel;
+
+      return "途中経過の目安";
+    }
+
+    function getPdfWeekClass(i, normalWeeks) {
+      if (i === 0) return "start";
+      if (i === normalWeeks - 1) return "goal";
+
+      const monthLabel = getMonthLabelByWeekIndex(i);
+      if (monthLabel) return "month";
+
+      return "";
+    }
+
     function updatePdfContent(current, target, pace, weeks, days, goalDate, startDate, normalWeeks) {
       document.getElementById("pdfBasic").innerText =
         `現在体重：${current.toFixed(1)}kg\n` +
@@ -883,35 +903,18 @@
       const pdfTimeline = document.getElementById("pdfTimeline");
       pdfTimeline.innerHTML = "";
 
-      for (let i = 0; i < normalWeeks; i++) {
+      const weeksForPdf = getPdfTimelineWeeks(normalWeeks);
+
+      weeksForPdf.forEach((i) => {
         const weekDate = new Date(startDate);
         weekDate.setDate(weekDate.getDate() + i * 7);
 
-        let displayWeight;
-        if (i === normalWeeks - 1) {
-          displayWeight = target;
-        } else {
-          displayWeight = current - (pace * i);
-          if (displayWeight < target) {
-            displayWeight = target;
-          }
-        }
-
-        let note = "";
-        const monthLabel = getMonthLabelByWeekIndex(i);
-
-        if (i === 0) {
-          note = "スタート";
-        }
-        if (monthLabel) {
-          note = monthLabel;
-        }
-        if (i === normalWeeks - 1) {
-          note = "目標到達の目安";
-        }
+        const displayWeight = getDisplayWeightForWeek(current, target, pace, normalWeeks, i);
+        const note = getPdfWeekNote(i, normalWeeks);
+        const extraClass = getPdfWeekClass(i, normalWeeks);
 
         const item = document.createElement("div");
-        item.className = "pdf-timeline-item";
+        item.className = `pdf-timeline-item ${extraClass}`.trim();
         item.innerHTML = `
           <div class="pdf-timeline-top">
             <div class="pdf-timeline-week">${i + 1}週目</div>
@@ -922,24 +925,7 @@
         `;
 
         pdfTimeline.appendChild(item);
-      }
-    }
-
-    async function copyShareUrl() {
-      const shareUrl = document.getElementById("shareUrl").innerText;
-      const shareMessage = document.getElementById("shareMessage");
-
-      if (!shareUrl || shareUrl === "-") {
-        shareMessage.innerText = "先に計算してください。";
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(shareUrl);
-        shareMessage.innerText = "URLをコピーしました。";
-      } catch (error) {
-        shareMessage.innerText = "コピーに失敗しました。長押しまたは手動でコピーしてください。";
-      }
+      });
     }
 
     function clearSavedData() {
@@ -948,13 +934,6 @@
       localStorage.removeItem("pace");
       localStorage.removeItem("startDate");
 
-      const url = new URL(window.location.href);
-      url.searchParams.delete("current");
-      url.searchParams.delete("target");
-      url.searchParams.delete("pace");
-      url.searchParams.delete("startDate");
-      window.history.replaceState({}, "", url.toString());
-
       document.getElementById("current").value = "";
       document.getElementById("target").value = "";
       document.getElementById("pace").value = "";
@@ -962,28 +941,11 @@
 
       document.getElementById("resultCard").style.display = "none";
       document.getElementById("progressCard").style.display = "none";
-      document.getElementById("shareCard").style.display = "none";
       document.getElementById("timeline").innerHTML = "";
       document.getElementById("guideMessage").innerText = "無理の少ないペースで、続けやすい計画を立てましょう。";
-      document.getElementById("shareMessage").innerText = "";
     }
 
     function restoreInputs() {
-      const urlParams = new URLSearchParams(window.location.search);
-
-      const urlCurrent = urlParams.get("current");
-      const urlTarget = urlParams.get("target");
-      const urlPace = urlParams.get("pace");
-      const urlStartDate = urlParams.get("startDate");
-
-      if (urlCurrent && urlTarget && urlPace && urlStartDate) {
-        document.getElementById("current").value = urlCurrent;
-        document.getElementById("target").value = urlTarget;
-        document.getElementById("pace").value = urlPace;
-        document.getElementById("startDate").value = urlStartDate;
-        return;
-      }
-
       const savedCurrent = localStorage.getItem("current");
       const savedTarget = localStorage.getItem("target");
       const savedPace = localStorage.getItem("pace");
@@ -1072,15 +1034,7 @@
         const weekDate = new Date(startDate);
         weekDate.setDate(weekDate.getDate() + i * 7);
 
-        let displayWeight;
-        if (i === normalWeeks - 1) {
-          displayWeight = target;
-        } else {
-          displayWeight = current - (pace * i);
-          if (displayWeight < target) {
-            displayWeight = target;
-          }
-        }
+        const displayWeight = getDisplayWeightForWeek(current, target, pace, normalWeeks, i);
 
         const card = document.createElement("div");
         card.className = "week-card";
@@ -1117,8 +1071,6 @@
       }
 
       saveToLocalStorage(current, target, pace, startDateValue);
-      const shareUrl = updateBrowserUrl(current, target, pace, startDateValue);
-      updateShareArea(shareUrl);
       updatePdfContent(current, target, pace, weeks, days, goalDate, startDate, normalWeeks);
 
       resultCard.scrollIntoView({
@@ -1129,16 +1081,6 @@
 
     window.addEventListener("DOMContentLoaded", () => {
       restoreInputs();
-
-      const urlParams = new URLSearchParams(window.location.search);
-      if (
-        urlParams.get("current") &&
-        urlParams.get("target") &&
-        urlParams.get("pace") &&
-        urlParams.get("startDate")
-      ) {
-        calc();
-      }
     });
   </script>
 
