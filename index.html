@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
-      --bg: #f4f7fb;
+      --bg: #f6f8fc;
       --card: #ffffff;
       --text: #1f2937;
       --subtext: #6b7280;
@@ -14,14 +14,17 @@
       --primary: #2d7df6;
       --primary-dark: #1f67d1;
       --primary-soft: #eaf2ff;
-      --success: #19a34a;
-      --success-soft: #eafaf0;
-      --goal: #f08a24;
-      --goal-soft: #fff5ea;
+      --success: #16a34a;
+      --success-soft: #ecfdf3;
+      --goal: #f59e0b;
+      --goal-soft: #fff7e8;
+      --month: #ec4899;
+      --month-soft: #fff1f8;
       --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
+      --pdf-pink: #fff4f8;
+      --pdf-yellow: #fff9ec;
+      --pdf-blue: #eef6ff;
+      --pdf-green: #eefcf3;
     }
 
     * {
@@ -30,7 +33,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(to bottom, #f7f9fc 0%, #eef4fb 100%);
+      background: linear-gradient(to bottom, #f8fbff 0%, #eef4fb 100%);
       margin: 0;
       padding: 24px 16px 40px;
       color: var(--text);
@@ -43,7 +46,7 @@
       padding: 22px 18px 20px;
       border-radius: 24px;
       box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.8);
     }
 
     .hero-image {
@@ -102,6 +105,9 @@
 
     .button-wrap {
       margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     button {
@@ -123,6 +129,19 @@
       transform: translateY(-1px);
       box-shadow: 0 14px 24px rgba(45, 125, 246, 0.26);
       background: linear-gradient(135deg, var(--primary-dark) 0%, #3f8df5 100%);
+    }
+
+    .sub-button {
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid #d9e8ff;
+      box-shadow: none;
+    }
+
+    .sub-button:hover {
+      background: #f5f9ff;
+      transform: none;
+      box-shadow: none;
     }
 
     .guide-message {
@@ -159,7 +178,7 @@
     }
 
     .result-item {
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.85);
       border: 1px solid #e5edf8;
       border-radius: 14px;
       padding: 12px;
@@ -182,7 +201,7 @@
       font-size: 13px;
       color: #475569;
       line-height: 1.8;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.75);
       border-radius: 12px;
       padding: 12px;
       border: 1px solid #e5edf8;
@@ -332,6 +351,8 @@
       box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
       border: 1px solid #eef2f7;
       margin-bottom: 12px;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     .week-row {
@@ -376,14 +397,18 @@
       line-height: 1.7;
     }
 
-    .highlight-6m {
-      border: 2px solid var(--success);
-      background: var(--success-soft);
+    .highlight-month {
+      border: 2px solid var(--month);
+      background: var(--month-soft);
     }
 
     .highlight-goal {
       border: 2px solid var(--goal);
       background: var(--goal-soft);
+    }
+
+    .pdf-sheet {
+      display: none;
     }
 
     @media (max-width: 420px) {
@@ -405,6 +430,192 @@
 
       .share-buttons {
         flex-direction: column;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      .pdf-sheet,
+      .pdf-sheet * {
+        visibility: visible;
+      }
+
+      .pdf-sheet {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        color: #374151;
+      }
+
+      .pdf-page {
+        width: 100%;
+      }
+
+      .pdf-header {
+        background: linear-gradient(135deg, #ffe7f1 0%, #eef6ff 100%);
+        border: 1px solid #f3d3e1;
+        border-radius: 22px;
+        padding: 22px 20px;
+        margin-bottom: 18px;
+      }
+
+      .pdf-kicker {
+        display: inline-block;
+        background: #ffffff;
+        color: #ec4899;
+        border: 1px solid #f7bfd6;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+
+      .pdf-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+
+      .pdf-subtitle {
+        font-size: 13px;
+        line-height: 1.8;
+        color: #6b7280;
+      }
+
+      .pdf-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .pdf-box {
+        border-radius: 18px;
+        padding: 16px;
+        border: 1px solid #e8edf5;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .pdf-box.pink {
+        background: var(--pdf-pink);
+      }
+
+      .pdf-box.blue {
+        background: var(--pdf-blue);
+      }
+
+      .pdf-box.yellow {
+        background: var(--pdf-yellow);
+      }
+
+      .pdf-box.green {
+        background: var(--pdf-green);
+      }
+
+      .pdf-box-title {
+        font-size: 14px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: #374151;
+      }
+
+      .pdf-box-content {
+        font-size: 13px;
+        line-height: 1.9;
+        white-space: pre-line;
+      }
+
+      .pdf-message {
+        background: #ffffff;
+        border: 1px dashed #f4b6cf;
+        border-radius: 18px;
+        padding: 16px;
+        margin-bottom: 18px;
+        font-size: 13px;
+        line-height: 1.9;
+      }
+
+      .pdf-section-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: #1f2937;
+        margin: 20px 0 12px;
+      }
+
+      .pdf-timeline {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .pdf-timeline-item {
+        background: #ffffff;
+        border: 1px solid #e5ebf3;
+        border-radius: 16px;
+        padding: 12px 14px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .pdf-timeline-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+
+      .pdf-timeline-week {
+        font-size: 13px;
+        font-weight: 800;
+        color: #1f2937;
+      }
+
+      .pdf-timeline-weight {
+        font-size: 14px;
+        font-weight: 800;
+        color: #111827;
+      }
+
+      .pdf-timeline-date {
+        font-size: 11px;
+        color: #6b7280;
+        margin-bottom: 4px;
+      }
+
+      .pdf-timeline-note {
+        font-size: 11px;
+        color: #ec4899;
+        line-height: 1.6;
+      }
+
+      .pdf-footer {
+        margin-top: 20px;
+        padding-top: 12px;
+        border-top: 1px solid #e5e7eb;
+        font-size: 11px;
+        color: #9ca3af;
+        text-align: center;
+      }
+
+      @page {
+        size: A4;
+        margin: 12mm;
       }
     }
   </style>
@@ -442,6 +653,7 @@
 
     <div class="button-wrap">
       <button onclick="calc()">計算する</button>
+      <button type="button" class="sub-button" onclick="printToPdf()">PDF保存</button>
     </div>
 
     <div class="guide-message" id="guideMessage">
@@ -494,6 +706,47 @@
 
   <div class="section-title">体重推移の目安</div>
   <div class="timeline" id="timeline"></div>
+
+  <div class="pdf-sheet" id="pdfSheet">
+    <div class="pdf-page">
+      <div class="pdf-header">
+        <div class="pdf-kicker">DIET PLAN SHEET</div>
+        <div class="pdf-title">減量プランシート</div>
+        <div class="pdf-subtitle">
+          入力内容をもとに、分かりやすくまとめた減量計画です。<br>
+          無理のないペースで、ひとつずつ進めていきましょう。
+        </div>
+      </div>
+
+      <div class="pdf-grid">
+        <div class="pdf-box pink">
+          <div class="pdf-box-title">基本情報</div>
+          <div class="pdf-box-content" id="pdfBasic">-</div>
+        </div>
+        <div class="pdf-box blue">
+          <div class="pdf-box-title">目標までの計画</div>
+          <div class="pdf-box-content" id="pdfSummary">-</div>
+        </div>
+        <div class="pdf-box yellow">
+          <div class="pdf-box-title">進め方の目安</div>
+          <div class="pdf-box-content" id="pdfPaceMessage">-</div>
+        </div>
+        <div class="pdf-box green">
+          <div class="pdf-box-title">ワンポイント</div>
+          <div class="pdf-box-content" id="pdfAdvice">-</div>
+        </div>
+      </div>
+
+      <div class="pdf-message" id="pdfCheerMessage">-</div>
+
+      <div class="pdf-section-title">週ごとの体重推移</div>
+      <div class="pdf-timeline" id="pdfTimeline"></div>
+
+      <div class="pdf-footer">
+        このシートは目安です。体調を見ながら、無理のない範囲で継続してください。
+      </div>
+    </div>
+  </div>
 
   <script>
     function formatDateJP(date) {
@@ -565,6 +818,113 @@
       document.getElementById("shareMessage").innerText = "このURLを開くと、同じ入力内容を再現できます。";
     }
 
+    function getMonthLabelByWeekIndex(i) {
+      const monthMap = {
+        4: "1ヶ月の目安です",
+        12: "3ヶ月の目安です",
+        20: "5ヶ月の目安です",
+        28: "7ヶ月の目安です",
+        36: "9ヶ月の目安です"
+      };
+      return monthMap[i] || "";
+    }
+
+    function getPaceMessage(pace) {
+      if (pace <= 0.5) {
+        return "無理の少ない、続けやすいペースです。";
+      } else if (pace <= 1.0) {
+        return "ややしっかりめのペースです。体調を見ながら進めましょう。";
+      } else {
+        return "かなり速いペースです。無理のない範囲で計画を見直しましょう。";
+      }
+    }
+
+    function getAdviceMessage(pace) {
+      if (pace <= 0.5) {
+        return "食事・睡眠・軽い運動を整えながら、安定して続けることを大切にしましょう。";
+      } else if (pace <= 1.0) {
+        return "ペースは悪くありません。疲れや空腹感が強い日は、少し余裕を持って進めるのがおすすめです。";
+      } else {
+        return "急ぎすぎると続きにくくなることがあります。しっかり食べて、休んで、無理のない計画に調整しましょう。";
+      }
+    }
+
+    function getCheerMessage(diff, weeks) {
+      if (diff <= 5) {
+        return "目標まであと少しです。焦らず、毎週の小さな積み重ねを大切にしていきましょう。";
+      } else if (weeks <= 12) {
+        return "3ヶ月以内を目安にした、まとまりのあるプランです。日々の習慣を整えるだけでも十分前進できます。";
+      } else {
+        return "少し長めのプランですが、その分リバウンドしにくい進め方がしやすくなります。無理なく続けることがいちばん大切です。";
+      }
+    }
+
+    function updatePdfContent(current, target, pace, weeks, days, goalDate, startDate, normalWeeks) {
+      document.getElementById("pdfBasic").innerText =
+        `現在体重：${current.toFixed(1)}kg\n` +
+        `目標体重：${target.toFixed(1)}kg\n` +
+        `開始日：${formatDateJP(startDate)}`;
+
+      document.getElementById("pdfSummary").innerText =
+        `必要な減量：${(current - target).toFixed(1)}kg\n` +
+        `期間：${weeks.toFixed(1)}週間（約${days}日）\n` +
+        `目標到達予定日：${formatDateJP(goalDate)}ごろ`;
+
+      document.getElementById("pdfPaceMessage").innerText =
+        `減量ペース：週${pace.toFixed(1)}kg\n` +
+        `${getPaceMessage(pace)}`;
+
+      document.getElementById("pdfAdvice").innerText =
+        getAdviceMessage(pace);
+
+      document.getElementById("pdfCheerMessage").innerText =
+        getCheerMessage(current - target, weeks);
+
+      const pdfTimeline = document.getElementById("pdfTimeline");
+      pdfTimeline.innerHTML = "";
+
+      for (let i = 0; i < normalWeeks; i++) {
+        const weekDate = new Date(startDate);
+        weekDate.setDate(weekDate.getDate() + i * 7);
+
+        let displayWeight;
+        if (i === normalWeeks - 1) {
+          displayWeight = target;
+        } else {
+          displayWeight = current - (pace * i);
+          if (displayWeight < target) {
+            displayWeight = target;
+          }
+        }
+
+        let note = "";
+        const monthLabel = getMonthLabelByWeekIndex(i);
+
+        if (i === 0) {
+          note = "スタート";
+        }
+        if (monthLabel) {
+          note = monthLabel;
+        }
+        if (i === normalWeeks - 1) {
+          note = "目標到達の目安";
+        }
+
+        const item = document.createElement("div");
+        item.className = "pdf-timeline-item";
+        item.innerHTML = `
+          <div class="pdf-timeline-top">
+            <div class="pdf-timeline-week">${i + 1}週目</div>
+            <div class="pdf-timeline-weight">${displayWeight.toFixed(1)}kg</div>
+          </div>
+          <div class="pdf-timeline-date">${formatDateJP(weekDate)}</div>
+          <div class="pdf-timeline-note">${note}</div>
+        `;
+
+        pdfTimeline.appendChild(item);
+      }
+    }
+
     async function copyShareUrl() {
       const shareUrl = document.getElementById("shareUrl").innerText;
       const shareMessage = document.getElementById("shareMessage");
@@ -605,6 +965,7 @@
       document.getElementById("shareCard").style.display = "none";
       document.getElementById("timeline").innerHTML = "";
       document.getElementById("guideMessage").innerText = "無理の少ないペースで、続けやすい計画を立てましょう。";
+      document.getElementById("shareMessage").innerText = "";
     }
 
     function restoreInputs() {
@@ -636,6 +997,15 @@
       } else {
         setTodayToStartDate();
       }
+    }
+
+    function printToPdf() {
+      const resultCard = document.getElementById("resultCard");
+      if (resultCard.style.display === "none" || document.getElementById("resultDiff").innerText === "-") {
+        alert("先に計算してください。");
+        return;
+      }
+      window.print();
     }
 
     function calc() {
@@ -692,13 +1062,7 @@
       document.getElementById("progressNote").innerText =
         `1週間あたり ${pace.toFixed(1)}kg ずつ進む想定です。`;
 
-      if (pace <= 0.5) {
-        guideMessage.innerText = "無理の少ない、続けやすいペースです。";
-      } else if (pace <= 1.0) {
-        guideMessage.innerText = "ややしっかりめのペースです。体調を見ながら進めましょう。";
-      } else {
-        guideMessage.innerText = "かなり速いペースです。無理のない範囲で計画を見直しましょう。";
-      }
+      guideMessage.innerText = getPaceMessage(pace);
 
       timeline.innerHTML = "";
 
@@ -722,14 +1086,15 @@
         card.className = "week-card";
 
         let note = "";
+        const monthLabel = getMonthLabelByWeekIndex(i);
 
         if (i === 0) {
           note = "スタート時点の体重です";
         }
 
-        if (i === 25) {
-          note = "ここが6か月の目安です";
-          card.classList.add("highlight-6m");
+        if (monthLabel) {
+          note = monthLabel;
+          card.classList.add("highlight-month");
         }
 
         if (i === normalWeeks - 1) {
@@ -754,6 +1119,7 @@
       saveToLocalStorage(current, target, pace, startDateValue);
       const shareUrl = updateBrowserUrl(current, target, pace, startDateValue);
       updateShareArea(shareUrl);
+      updatePdfContent(current, target, pace, weeks, days, goalDate, startDate, normalWeeks);
 
       resultCard.scrollIntoView({
         behavior: "smooth",
